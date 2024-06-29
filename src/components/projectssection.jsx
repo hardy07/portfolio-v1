@@ -5,7 +5,7 @@ const projects = [
   {
     name: "Radio Javan Downloader",
     type: "Web Application",
-    images: ["/src/assets/projects_imgs/prj1.png"],
+    images: ["/src/assets/prj1.png"],
     description:
       "Web Application for downloading any kind of media from radiojavan.com website",
     link: "http://example.com",
@@ -27,7 +27,7 @@ const projects = [
   {
     name: "Weather App",
     type: "Web Application",
-    images: ["/src/assets/projects_imgs/prj2.png"],
+    images: ["/src/assets/prj2.png"],
     description:
       "A Web Application that shows current and forecast weather information based on I",
     link: "http://example.com",
@@ -48,7 +48,7 @@ const projects = [
   {
     name: "Persian TTS",
     type: "Web Application",
-    images: ["/src/assets/projects_imgs/prj3.png"],
+    images: ["/src/assets/prj3.png"],
     description:
       "A web app that converts Farsi text to speech with igap messenger api.",
     link: "http://example.com",
