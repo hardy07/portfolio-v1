@@ -200,13 +200,13 @@ const Contact = () => {
                     mode === "light" && "invert hue-rotate-180"
                   }`}
                 >
-                  <ReCAPTCHA
+{/*                   <ReCAPTCHA
                     sitekey={constants.recaptcha_key}
                     onChange={(e) => setCaptcha(e)}
                     theme="dark"
                     size="normal"
                     tabindex="0"
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="flex items-center justify-center">
