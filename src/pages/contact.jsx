@@ -3,7 +3,6 @@ import toast, { Toaster } from "react-hot-toast";
 import NavBar from "../components/navbar.jsx";
 import SocialCard from "../components/socialcard.jsx";
 import Footer from "../components/footer.jsx";
-import ReCAPTCHA from "react-google-recaptcha";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import constants from "../utils/constants.jsx";
 import { useThemeStore } from "../contexts/theme.jsx";
@@ -45,7 +44,6 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [captcha, setCaptcha] = useState("");
 
   const sendMessage = () => {
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -79,15 +77,6 @@ const Contact = () => {
         },
       });
       return;
-    } else if (!captcha?.length > 0) {
-      toast.error("Please solve the captcha", {
-        style: {
-          borderRadius: "10px",
-          background: "#1f1f1f",
-          color: "#fff",
-        },
-      });
-      return;
     }
 
     toast.promise(
@@ -95,7 +84,6 @@ const Contact = () => {
         name,
         email,
         message,
-        captcha,
       }),
       {
         loading: "Sending...",
@@ -184,19 +172,6 @@ const Contact = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
-                <div
-                  className={`mt-5 flex items-center justify-center ${
-                    mode === "light" && "invert hue-rotate-180"
-                  }`}
-                >
-                  <ReCAPTCHA
-                    sitekey={constants.recaptcha_key}
-                    onChange={(e) => setCaptcha(e)}
-                    theme="dark"
-                    size="normal"
-                    tabindex="0"
-                  />
-                </div>
               </div>
               <div className="flex items-center justify-center">
                 <button
