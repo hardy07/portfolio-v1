@@ -5,7 +5,9 @@ const projects = [
   {
     name: "Radio Javan Downloader",
     type: "Web Application",
-    images: ["/src/assets/prj1.png"],
+    images: [
+      "https://media.discordapp.net/attachments/1256687941711826985/1256689099784589312/prj1.png?ex=6681ae6d&is=66805ced&hm=dd936083c19efb176326aef00db23f96a432230416991f72e93477a3fe7956cc&=&format=webp&quality=lossless&width=1250&height=592",
+    ],
     description:
       "Web Application for downloading any kind of media from radiojavan.com website",
     link: "http://example.com",
@@ -27,7 +29,9 @@ const projects = [
   {
     name: "Weather App",
     type: "Web Application",
-    images: ["/src/assets/prj2.png"],
+    images: [
+      "https://media.discordapp.net/attachments/1256687941711826985/1256689486352486410/prj2.png?ex=6681aec9&is=66805d49&hm=ca00ed4e645445cbb0c85697fbab27b05e534cd77e81eea7a6f935aacfbaf7b5&=&format=webp&quality=lossless&width=1177&height=593",
+    ],
     description:
       "A Web Application that shows current and forecast weather information based on I",
     link: "http://example.com",
@@ -48,7 +52,9 @@ const projects = [
   {
     name: "Persian TTS",
     type: "Web Application",
-    images: ["/src/assets/prj3.png"],
+    images: [
+      "https://media.discordapp.net/attachments/1256687941711826985/1256689601829929020/prj3.png?ex=6681aee5&is=66805d65&hm=d5c9a66e70c526162255fe84b589105c608af8f3b593dd3e6277d6383e0b6414&=&format=webp&quality=lossless&width=1175&height=593",
+    ],
     description:
       "A web app that converts Farsi text to speech with igap messenger api.",
     link: "http://example.com",
