@@ -1,5 +1,5 @@
 import React from "react";
-import { useThemeStore } from "../contexts/theme";
+import { useThemeStore } from "../contexts/theme.jsx";
 const Loading = () => {
   const { mode } = useThemeStore();
   return (
