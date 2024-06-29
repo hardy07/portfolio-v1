@@ -200,7 +200,7 @@ const Contact = () => {
                     mode === "light" && "invert hue-rotate-180"
                   }`}
                 >
-{/*                   <ReCAPTCHA
+                  {/*                   <ReCAPTCHA
                     sitekey={constants.recaptcha_key}
                     onChange={(e) => setCaptcha(e)}
                     theme="dark"
@@ -227,4 +227,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default contact;
