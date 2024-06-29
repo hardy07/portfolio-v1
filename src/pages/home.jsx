@@ -3,22 +3,22 @@ import { useLanyard } from "react-use-lanyard";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 
-import NavBar from "../components/NavBar";
-import Tooltip from "../components/ToolTip";
-import RepoCard from "../components/RepoCard";
-import DiscordCard from "../components/DiscordCard";
-import ProjectsSection from "../components/ProjectsSection";
+import NavBar from "../components/navbar.jsx";
+import Tooltip from "../components/tooltip.jsx";
+import RepoCard from "../components/repocard.jsx";
+import DiscordCard from "../components/discordcard.jsx";
+import ProjectsSection from "../components/projectssection.jsx";
 
 import { Link } from "react-router-dom";
 import { ImLocation } from "react-icons/im";
-import Footer from "../components/Footer";
+import Footer from "../components/footer.jsx";
 import avatar from "../assets/avatar.jpg";
-import constants from "../utils/constants";
+import constants from "../utils/constants.jsx";
 import axios from "axios";
-import { useThemeStore } from "../contexts/theme";
-import ProjectsCard from "../components/ProjectsCard";
-import CardLayout from "../components/CardLayout"; // Import the CardLayout component
-import EducationQualification from "../components/EducationQualification";
+import { useThemeStore } from "../contexts/theme.jsx";
+import ProjectsCard from "../components/projectscard.jsx";
+import CardLayout from "../components/cardlayout.jsx"; // Import the CardLayout component
+import EducationQualification from "../components/educationqualification.jsx";
 
 const Home = () => {
   const { mode } = useThemeStore();
@@ -214,7 +214,8 @@ const Home = () => {
           >
             Qualifications
           </h1>
-          <EducationQualification /> {/* Display the EducationQualification component */}
+          <EducationQualification />{" "}
+          {/* Display the EducationQualification component */}
         </motion.div>
 
         <motion.div

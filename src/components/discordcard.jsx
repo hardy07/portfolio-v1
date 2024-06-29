@@ -1,7 +1,7 @@
 import guide from "../assets/guide_1.png";
-import { useThemeStore } from "../contexts/theme";
-import { getFlags } from "../utils/getFlags";
-import { Badges } from "../utils/badgesEncoded";
+import { useThemeStore } from "../contexts/theme.jsx";
+import { getFlags } from "../utils/getflags.jsx";
+import { Badges } from "../utils/badgesencoded.jsx";
 const DiscordCard = ({ info }) => {
   const { discord_user, activities, discord_status } = info;
   const { id, avatar, username, display_name } = discord_user;

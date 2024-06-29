@@ -1,8 +1,8 @@
 import { useEffect, useState, Suspense } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/navbar.jsx";
 import SocialCard from "../components/SocialCard";
-import Footer from "../components/Footer";
+import Footer from "../components/footer.jsx";
 import ReCAPTCHA from "react-google-recaptcha";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import constants from "../utils/constants";
