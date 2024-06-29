@@ -15,25 +15,9 @@ const Contact = () => {
   const [mystate, setMystate] = useState("");
 
   useEffect(() => {
-    const date = new Date();
-    const timezone = "Asia/Kolkata";
-    const formattedTime = date.toLocaleString("en-US", {
-      timeZone: timezone,
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    const hour = date.toLocaleString("en-US", {
-      timeZone: timezone,
-      hour: "numeric",
-    });
-
-    const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
-    setMystate(isInSleepTime ? "sleeping" : "awake");
-    setTime(formattedTime);
-
-    const intervalId = setInterval(() => {
+    const updateTimeAndState = () => {
       const date = new Date();
+      const timezone = "Asia/Kolkata";
       const formattedTime = date.toLocaleString("en-US", {
         timeZone: timezone,
         hour: "2-digit",
@@ -43,12 +27,17 @@ const Contact = () => {
       const hour = date.toLocaleString("en-US", {
         timeZone: timezone,
         hour: "numeric",
+        hour12: false,
       });
 
       const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
       setMystate(isInSleepTime ? "sleeping" : "awake");
       setTime(formattedTime);
-    }, 60 * 1000);
+    };
+
+    updateTimeAndState();
+
+    const intervalId = setInterval(updateTimeAndState, 60 * 1000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -80,7 +69,7 @@ const Contact = () => {
         },
       });
       return;
-    } else if (message.length <= 50 || message.length >= 300) {
+    } else if (message.length <= 1 || message.length >= 300) {
       // Fixed condition for message length
       toast.error("Message field should be between 51 and 299 characters", {
         style: {
@@ -200,13 +189,13 @@ const Contact = () => {
                     mode === "light" && "invert hue-rotate-180"
                   }`}
                 >
-                  {/*                   <ReCAPTCHA
+                  <ReCAPTCHA
                     sitekey={constants.recaptcha_key}
                     onChange={(e) => setCaptcha(e)}
                     theme="dark"
                     size="normal"
                     tabindex="0"
-                  /> */}
+                  />
                 </div>
               </div>
               <div className="flex items-center justify-center">
