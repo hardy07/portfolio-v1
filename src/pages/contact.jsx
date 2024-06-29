@@ -180,7 +180,7 @@ const Contact = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col w-[23rem]">
+              <div className="flex flex-col w-full">
                 <label
                   className="text-sm font-rubik text-white/50"
                   htmlFor="message"
@@ -188,7 +188,7 @@ const Contact = () => {
                   Message
                 </label>
                 <textarea
-                  className="bg-zinc-800 rounded-lg outline-none px-2 py-2 resize-none"
+                  className="bg-zinc-800 rounded-lg outline-none px-2 py-2 resize-none w-full"
                   id="message"
                   cols="30"
                   rows="10"
@@ -211,7 +211,7 @@ const Contact = () => {
               </div>
               <div className="flex items-center justify-center">
                 <button
-                  className="w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik"
+                  className="w-full md:w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik"
                   onClick={sendMessage}
                 >
                   Send <RiSendPlane2Fill />

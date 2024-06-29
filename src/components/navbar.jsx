@@ -112,14 +112,25 @@ const NavBar = () => {
             menuOpen ? "!left-0" : ""
           }`}
         >
-          <div className="font-rubik flex flex-col items-center gap-10 w-full pt-12">
+          <div className="font-mono flex flex-col items-center gap-10 w-full pt-12">
             <Link onClick={menuOnclick} to={"/"}>
-              /HOME
+              /home
             </Link>
+            {/* <Link onClick={menuOnclick} to={"/Qualifications"}>
+              /qualifications
+            </Link>
+            <Link onClick={menuOnclick} to={"/Technologies"}>
+              /technologies
+            </Link>
+            <Link onClick={menuOnclick} to={"/Projects"}>
+              /projects
+            </Link>
+            <Link onClick={menuOnclick} to={"/AreasofInterest"}>
+              /areas of expertise
+            </Link> */}
             <Link onClick={menuOnclick} to={"/contact"}>
-              /CONTACT
+              /contact
             </Link>
-            <a href="https://blog.hoseinwave.ir">/BLOG</a>
           </div>
         </div>
       </div>

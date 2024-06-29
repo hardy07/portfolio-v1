@@ -36,6 +36,7 @@ import { FaSass } from "react-icons/fa";
 import { FaCode } from "react-icons/fa";
 import { DiJava } from "react-icons/di"; // Java icon
 import { SiFirebase } from "react-icons/si"; // Google Firebase icon
+import ReCAPTCHA from "react-google-recaptcha";
 export default {
   top_page_socials: [
     {
@@ -178,16 +179,16 @@ export default {
   birth_year: 2004,
   location: "Chennai, India",
   timeZone: "Asia/Kolkata",
-  recaptcha_key: "6LdS9ScnAAAAAI6BsnxbI2nIdTT3QzD7nhGXI-aU",
+  recaptcha_key: "6LeYUgQqAAAAAJqGCwIoRdoD5H0YEImC5N66f4zz",
   hcaptcha_key: "ba445486-b7e0-47a3-be93-c7309e4614b3",
   map_location_url:
     "https://www.google.com/maps/place/Chennai,+Tamil+Nadu/@13.0478078,80.044198,11z/data=!3m1!4b1!4m6!3m5!1s0x3a5265ea4f7d3361:0x6e61a70b6863d433!8m2!3d13.0843007!4d80.2704622!16zL20vMGM4dGs?entry=ttu",
   intro_text_animation: [
     "a full stack dev 🎉",
     1000,
-    "a Computer Science engineering student 🌐",
+    "a computer science engineer🌐",
     1000,
-    "a Machine Learning Developer🧑‍💻",
+    "a machine learning developer🧑‍💻",
     1000,
   ],
 };
