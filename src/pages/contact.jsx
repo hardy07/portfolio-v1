@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import NavBar from "../components/navbar.jsx";
 import SocialCard from "../components/socialcard.jsx";
 import Footer from "../components/footer.jsx";
+import ReCAPTCHA from "react-google-recaptcha";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import constants from "../utils/constants.jsx";
 import { useThemeStore } from "../contexts/theme.jsx";
@@ -14,9 +15,25 @@ const Contact = () => {
   const [mystate, setMystate] = useState("");
 
   useEffect(() => {
-    const updateTimeAndState = () => {
+    const date = new Date();
+    const timezone = "Asia/Kolkata";
+    const formattedTime = date.toLocaleString("en-US", {
+      timeZone: timezone,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    const hour = date.toLocaleString("en-US", {
+      timeZone: timezone,
+      hour: "numeric",
+    });
+
+    const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
+    setMystate(isInSleepTime ? "sleeping" : "awake");
+    setTime(formattedTime);
+
+    const intervalId = setInterval(() => {
       const date = new Date();
-      const timezone = "Asia/Kolkata";
       const formattedTime = date.toLocaleString("en-US", {
         timeZone: timezone,
         hour: "2-digit",
@@ -26,17 +43,12 @@ const Contact = () => {
       const hour = date.toLocaleString("en-US", {
         timeZone: timezone,
         hour: "numeric",
-        hour12: false,
       });
 
       const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
       setMystate(isInSleepTime ? "sleeping" : "awake");
       setTime(formattedTime);
-    };
-
-    updateTimeAndState();
-
-    const intervalId = setInterval(updateTimeAndState, 60 * 1000);
+    }, 60 * 1000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -44,6 +56,7 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [captcha, setCaptcha] = useState("");
 
   const sendMessage = () => {
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -67,9 +80,18 @@ const Contact = () => {
         },
       });
       return;
-    } else if (message.length <= 1 || message.length >= 300) {
+    } else if (message.length <= 50 || message.length >= 300) {
       // Fixed condition for message length
       toast.error("Message field should be between 51 and 299 characters", {
+        style: {
+          borderRadius: "10px",
+          background: "#1f1f1f",
+          color: "#fff",
+        },
+      });
+      return;
+    } else if (!captcha?.length > 0) {
+      toast.error("Please solve the captcha", {
         style: {
           borderRadius: "10px",
           background: "#1f1f1f",
@@ -84,6 +106,7 @@ const Contact = () => {
         name,
         email,
         message,
+        captcha,
       }),
       {
         loading: "Sending...",
@@ -172,6 +195,19 @@ const Contact = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
+                <div
+                  className={`mt-5 flex items-center justify-center ${
+                    mode === "light" && "invert hue-rotate-180"
+                  }`}
+                >
+                  <ReCAPTCHA
+                    sitekey={constants.recaptcha_key}
+                    onChange={(e) => setCaptcha(e)}
+                    theme="dark"
+                    size="normal"
+                    tabindex="0"
+                  />
+                </div>
               </div>
               <div className="flex items-center justify-center">
                 <button
