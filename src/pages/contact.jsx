@@ -81,8 +81,8 @@ const Contact = () => {
         },
       });
       return;
-    } else if (message.length <= 50 || message.length >= 300) {
-      toast.error("Message field should be between 51 and 299 characters", {
+    } else if (message.length <= 2 || message.length >= 500) {
+      toast.error("Message field should be between 2 and 500 characters", {
         style: {
           borderRadius: "10px",
           background: "#1f1f1f",
