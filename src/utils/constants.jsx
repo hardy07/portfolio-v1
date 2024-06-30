@@ -179,7 +179,7 @@ export default {
   birth_year: 2004,
   location: "Chennai, India",
   timeZone: "Asia/Kolkata",
-  recaptcha_key: "6LeMmgQqAAAAADABaYuWOIPOKU42bMlLe5FrWLpW",
+  recaptcha_key: "6LeMmgQqAAAAAA8OgU1Zjt4-z2aLO6_4bp_QOHgJ",
   // hcaptcha_key: "ba445486-b7e0-47a3-be93-c7309e4614b3",
   map_location_url:
     "https://www.google.com/maps/place/Chennai,+Tamil+Nadu/@13.0478078,80.044198,11z/data=!3m1!4b1!4m6!3m5!1s0x3a5265ea4f7d3361:0x6e61a70b6863d433!8m2!3d13.0843007!4d80.2704622!16zL20vMGM4dGs?entry=ttu",
