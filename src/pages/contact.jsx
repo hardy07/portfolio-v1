@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import NavBar from "../components/navbar.jsx";
 import SocialCard from "../components/socialcard.jsx";
@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import constants from "../utils/constants.jsx";
 import { useThemeStore } from "../contexts/theme.jsx";
-import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const { mode } = useThemeStore();
@@ -17,6 +17,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [captcha, setCaptcha] = useState("");
+  const form = useRef();
 
   useEffect(() => {
     const date = new Date();
@@ -32,7 +33,7 @@ const Contact = () => {
       hour: "numeric",
     });
 
-    const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
+    const isInSleepTime = hour >= 23 || hour < 7;
     setMystate(isInSleepTime ? "sleeping" : "awake");
     setTime(formattedTime);
 
@@ -49,7 +50,7 @@ const Contact = () => {
         hour: "numeric",
       });
 
-      const isInSleepTime = hour >= 23 || hour < 7; // Updated condition for sleeping time
+      const isInSleepTime = hour >= 23 || hour < 7;
       setMystate(isInSleepTime ? "sleeping" : "awake");
       setTime(formattedTime);
     }, 60 * 1000);
@@ -57,7 +58,9 @@ const Contact = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
+
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     if (!emailPattern.test(email)) {
@@ -70,7 +73,6 @@ const Contact = () => {
       });
       return;
     } else if (name.length <= 3 || name.length >= 32) {
-      // Fixed condition for name length
       toast.error("Name field should be between 4 and 31 characters", {
         style: {
           borderRadius: "10px",
@@ -80,7 +82,6 @@ const Contact = () => {
       });
       return;
     } else if (message.length <= 50 || message.length >= 300) {
-      // Fixed condition for message length
       toast.error("Message field should be between 51 and 299 characters", {
         style: {
           borderRadius: "10px",
@@ -100,32 +101,29 @@ const Contact = () => {
       return;
     }
 
-    toast.promise(
-      axios.post(`/.netlify/functions/contact`, {
-        name,
-        email,
-        message,
-        captcha,
-      }),
-      {
-        loading: "Sending...",
-        success: "Message Sent!",
-        error: (err) => {
-          if (err.response && err.response.status === 429) {
-            return "You're on cooldown, please wait 10 minutes!";
-          } else {
-            return "Something went wrong!";
-          }
+    const emailParams = {
+      from_name: name,
+      from_email: email,
+      message: message,
+    };
+
+    emailjs
+      .sendForm(
+        "service_x19wvi6", // Replace with your EmailJS service ID
+        "template_uknkuth", // Replace with your EmailJS template ID
+        form.current,
+        "HauRwy1zLODnMuBHe" // Replace with your EmailJS user ID
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          toast.success("Message Sent!");
         },
-      },
-      {
-        style: {
-          borderRadius: "10px",
-          background: "#1f1f1f",
-          color: "#fff",
-        },
-      }
-    );
+        (error) => {
+          console.log(error.text);
+          toast.error("Something went wrong!");
+        }
+      );
   };
 
   return (
@@ -149,73 +147,78 @@ const Contact = () => {
           </div>
           <div className="flex flex-col items-center">
             <div className="flex flex-col bg-boxes border-white/10 border-[1px] p-5 rounded-2xl gap-5 min-w-[18rem]">
-              <div className="flex flex-col">
-                <label
-                  className="text-sm font-rubik text-white/50"
-                  htmlFor="name"
-                >
-                  Name
-                </label>
-                <input
-                  className="bg-zinc-800 h-10 rounded-lg outline-none px-2"
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label
-                  className="text-sm font-rubik text-white/50"
-                  htmlFor="email"
-                >
-                  Email
-                </label>
-                <input
-                  className="bg-zinc-800 h-10 rounded-lg outline-none px-2"
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col w-full">
-                <label
-                  className="text-sm font-rubik text-white/50"
-                  htmlFor="message"
-                >
-                  Message
-                </label>
-                <textarea
-                  className="bg-zinc-800 rounded-lg outline-none px-2 py-2 resize-none w-full"
-                  id="message"
-                  cols="30"
-                  rows="10"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                ></textarea>
-                <div
-                  className={`mt-5 flex items-center justify-center ${
-                    mode === "light" && "invert hue-rotate-180"
-                  }`}
-                >
-                  <ReCAPTCHA
-                    sitekey={constants.recaptcha_key}
-                    onChange={(value) => setCaptcha(value)}
-                    theme="dark"
-                    size="normal"
-                    tabindex="0"
+              <form ref={form} onSubmit={sendMessage}>
+                <div className="flex flex-col">
+                  <label
+                    className="text-sm font-rubik text-white/50"
+                    htmlFor="name"
+                  >
+                    Name
+                  </label>
+                  <input
+                    className="bg-zinc-800 h-10 rounded-lg outline-none px-2"
+                    type="text"
+                    id="name"
+                    name="from_name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <button
-                  className="w-full md:w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik"
-                  onClick={sendMessage}
-                >
-                  Send <RiSendPlane2Fill />
-                </button>
-              </div>
+                <div className="flex flex-col">
+                  <label
+                    className="text-sm font-rubik text-white/50"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className="bg-zinc-800 h-10 rounded-lg outline-none px-2"
+                    type="email"
+                    id="email"
+                    name="from_email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <label
+                    className="text-sm font-rubik text-white/50"
+                    htmlFor="message"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    className="bg-zinc-800 rounded-lg outline-none px-2 py-2 resize-none w-full"
+                    id="message"
+                    name="message"
+                    cols="30"
+                    rows="10"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
+                  <div
+                    className={`mt-5 flex items-center justify-center ${
+                      mode === "light" && "invert hue-rotate-180"
+                    }`}
+                  >
+                    {/* <ReCAPTCHA
+                      sitekey={constants.recaptcha_key}
+                      onChange={(value) => setCaptcha(value)}
+                      theme="dark"
+                      size="normal"
+                      tabindex="0"
+                    /> */}
+                  </div>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    type="submit"
+                    className="w-full md:w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik"
+                  >
+                    Send <RiSendPlane2Fill />
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
