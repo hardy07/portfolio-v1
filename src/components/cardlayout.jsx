@@ -5,45 +5,81 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const cardData = [
   {
+    title: "Machine Learning",
+    icon: "🤖",
+    content: (
+      <ul className="list-disc ml-5 space-y-3">
+        <li>
+          Implemented machine learning models for complex tasks such as natural
+          language processing (NLP) and image classification using TensorFlow
+          and Keras.
+        </li>
+        <li>
+          Developed custom machine learning pipelines for preprocessing data,
+          training models, and evaluating performance metrics.
+        </li>
+        <li>
+          Experienced in ensemble methods and deep learning architectures like
+          Convolutional Neural Networks (CNNs) for image and text data.
+        </li>
+        <li>
+          Achieved significant accuracy improvements through model optimization
+          and hyperparameter tuning techniques.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    title: "Deep Learning",
+    icon: "🧠",
+    content: (
+      <ul className="list-disc ml-5 space-y-3">
+        <li>
+          Implemented machine learning models using libraries like scikit-learn
+          and TensorFlow for tasks such as classification and regression.
+        </li>
+        <li>
+          Applied various algorithms including random forests, support vector
+          machines (SVM), and gradient boosting machines (GBM) to solve
+          real-world problems.
+        </li>
+        <li>
+          Published research papers and presented findings at conferences,
+          demonstrating proficiency in applying machine learning techniques to
+          diverse datasets and domains.
+        </li>
+        <li>
+          Achieved significant accuracy improvements through model optimization
+          and hyperparameter tuning techniques.
+        </li>
+      </ul>
+    ),
+  },
+
+  {
     title: "Data Science",
     icon: "📈",
     content: (
       <ul className="list-disc ml-5 space-y-3">
         <li>
-          I perform extensive data analysis and interpretation to understand
-          patterns and trends.
+          Applied machine learning techniques and advanced statistical analysis
+          to large datasets for projects like fake news detection and abusive
+          speech analysis.
         </li>
         <li>
-          I manage and optimize data systems, and design algorithms for data
-          mining and research purposes.
-        </li>
-        <li>I provide actionable insights based on data analysis.</li>
-        <li>Machine learning</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Artificial Intelligence",
-    icon: "🤖",
-    content: (
-      <ul className="list-disc ml-5 space-y-3">
-        <li>
-          I develop and implement advanced AI models, including deep learning
-          and neural networks.
+          Proficient in data preprocessing, feature engineering, and model
+          evaluation using Python libraries such as NumPy, Pandas, and
+          scikit-learn.
         </li>
         <li>
-          I specialize in creating intelligent chatbots for a variety of
-          applications, enhancing customer service and engagement.
-        </li>
-        <li>I build and maintain scalable AI solutions in production.</li>
-        <li>
-          I collaborate with cross-functional teams to understand business
-          requirements and design effective AI systems.
+          Developed and implemented predictive models, achieving high accuracy
+          rates in classification tasks.
         </li>
       </ul>
     ),
   },
-  {
+
+  /* {
     title: "Python & Automation",
     icon: "⚙️",
     content: (
@@ -61,26 +97,33 @@ const cardData = [
         <li>Task scheduling</li>
       </ul>
     ),
-  },
+  }, */
   {
     title: "Web Development",
-    icon: "💻",
+    icon: "🌐",
     content: (
       <ul className="list-disc ml-5 space-y-3">
         <li>
-          I create responsive and user-friendly websites using HTML, CSS,
-          Bootstrap and JavaScript.
+          Designed and developed responsive and interactive web applications
+          using HTML/CSS, JavaScript, React.js, Node.js, and Express.js.
         </li>
         <li>
-          I ensure optimal website performance and design aesthetics across
-          various devices and browsers.
+          Deployed applications using platforms like Netlify and Vercel,
+          ensuring seamless deployment and continuous integration.
         </li>
-        <li>API integration</li>
-        <li>UI/UX design</li>
+        <li>
+          Integrated various databases including MySQL, MongoDB, and Firebase
+          for data storage and retrieval, ensuring scalability and data
+          consistency.
+        </li>
+        <li>
+          Currently learning AWS to expand cloud computing and deployment
+          capabilities.
+        </li>
       </ul>
     ),
   },
-  {
+  /* {
     title: "Bioinformatics",
     icon: "🧬",
     content: (
@@ -97,7 +140,7 @@ const cardData = [
         <li>Data mining</li>
       </ul>
     ),
-  },
+  }, */
 ];
 
 const Card = ({ title, icon, onClick }) => {
