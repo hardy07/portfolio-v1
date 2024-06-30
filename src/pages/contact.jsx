@@ -17,6 +17,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [captcha, setCaptcha] = useState("");
+  const [isSending, setIsSending] = useState(false); // State for animation
   const form = useRef();
 
   useEffect(() => {
@@ -101,6 +102,8 @@ const Contact = () => {
       return;
     }
 
+    setIsSending(true);
+
     const emailParams = {
       from_name: name,
       from_email: email,
@@ -123,7 +126,10 @@ const Contact = () => {
           console.log(error.text);
           toast.error("Something went wrong!");
         }
-      );
+      )
+      .finally(() => {
+        setIsSending(false);
+      });
   };
 
   return (
@@ -213,9 +219,14 @@ const Contact = () => {
                 <div className="flex items-center justify-center">
                   <button
                     type="submit"
-                    className="w-full md:w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik"
+                    className={`w-full md:w-[10rem] flex items-center h-12 bg-primary rounded-xl justify-center gap-1 mt-1 font-bold font-rubik ${
+                      isSending
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-primary-dark"
+                    }`}
+                    disabled={isSending}
                   >
-                    Send <RiSendPlane2Fill />
+                    {isSending ? "Sending..." : "Send"} <RiSendPlane2Fill />
                   </button>
                 </div>
               </form>
