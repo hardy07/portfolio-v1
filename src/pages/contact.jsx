@@ -13,6 +13,10 @@ const Contact = () => {
   const { mode } = useThemeStore();
   const [time, setTime] = useState();
   const [mystate, setMystate] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [captcha, setCaptcha] = useState("");
 
   useEffect(() => {
     const date = new Date();
@@ -52,11 +56,6 @@ const Contact = () => {
 
     return () => clearInterval(intervalId);
   }, []);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [captcha, setCaptcha] = useState("");
 
   const sendMessage = () => {
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -102,7 +101,7 @@ const Contact = () => {
     }
 
     toast.promise(
-      axios.post(`.netlify/functions/contact`, {
+      axios.post(`/.netlify/functions/contact`, {
         name,
         email,
         message,
@@ -202,7 +201,7 @@ const Contact = () => {
                 >
                   <ReCAPTCHA
                     sitekey={constants.recaptcha_key}
-                    onChange={(e) => setCaptcha(e)}
+                    onChange={(value) => setCaptcha(value)}
                     theme="dark"
                     size="normal"
                     tabindex="0"

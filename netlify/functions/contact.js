@@ -7,15 +7,33 @@ const formattedReturn = (body, statusCode) => {
 
 export const handler = async (event, context) => {
     const body = JSON.parse(event.body);
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    const captcha_res = await (
-        await fetch(
-            `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${body.captcha}`
-        )
-    ).json();
-    if (captcha_res.success) {
+    if (!body.captcha) {
+        return formattedReturn(
+            { success: false, message: "Captcha is required" },
+            400
+        );
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET;
+    const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${body.captcha}`;
+
+    try {
+        const captchaResponse = await fetch(verificationURL, {
+            method: "POST",
+        });
+        const captchaData = await captchaResponse.json();
+
+        if (!captchaData.success) {
+            return formattedReturn(
+                { success: false, message: "Captcha Invalid" },
+                400
+            );
+        }
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
         await fetch(process.env.DISCORD_WEBHOOK, {
             method: "POST",
             headers: myHeaders,
@@ -44,14 +62,15 @@ export const handler = async (event, context) => {
                 attachments: [],
             }),
         });
+
         return formattedReturn({
             success: true,
-            message: "Successfuly reported",
+            message: "Successfully reported",
         });
-    } else {
+    } catch (error) {
         return formattedReturn(
-            { success: false, message: "Captcha Invalid" },
-            400
+            { success: false, message: "Internal Server Error" },
+            500
         );
     }
 };

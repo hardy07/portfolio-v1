@@ -28,7 +28,8 @@
     "react-vertical-timeline-component": "^3.6.0",
     "sort-by": "^0.0.2",
     "swiper": "^11.0.5",
-    "zustand": "^4.3.9"
+    "zustand": "^4.3.9",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",
