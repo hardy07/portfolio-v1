@@ -1,26 +1,17 @@
-import { createRoutes } from "react-router";
-import React, { Suspense } from "react";
+import { createBrowserRouter } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
 import RedirectAnd404 from "./pages/redirectand404.jsx";
+const Home = lazy(() => import("./pages/home.jsx"));
+const Contact = lazy(() => import("./pages/contact.jsx"));
 
-const Home = React.lazy(() => import("./pages/home.jsx"));
-const Contact = React.lazy(() => import("./pages/contact.jsx"));
-
-const routes = createRoutes([
+const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Home />
-      </Suspense>
-    ),
+    element: <Home />,
   },
   {
     path: "/contact",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Contact />
-      </Suspense>
-    ),
+    element: <Contact />,
   },
   {
     path: "*",
@@ -28,4 +19,4 @@ const routes = createRoutes([
   },
 ]);
 
-export default routes;
+export default router;
