@@ -59,7 +59,7 @@ const EducationQualifications = () => {
           Data Structures and Algorithms, Machine Learning, Speech Processing,
           Operating Systems, Computer Networks, DBMS, etc.
         </p>
-        <h4 style={{ marginTop: "10px", color: "#00aaff" }}>CGPA: 7.2</h4>
+        <h4 style={{ marginTop: "10px", color: "#00aaff" }}>CGPA: 7.25</h4>
       </VerticalTimelineElement>
 
       <VerticalTimelineElement

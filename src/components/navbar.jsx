@@ -129,7 +129,15 @@ const NavBar = () => {
               >
                 /publications
               </Link>
-              
+              {/* Add the Blog Link */}
+              <a
+                href="https://hardy07.github.io/"
+                className="hover:bg-zinc-800/50 px-3 py-2 rounded-full transition-colors duration-300 cursor-pointer"
+                /*target="_blank"*/
+                rel="noopener noreferrer"
+              >
+                /blog
+              </a>
               <Link
                 className="hover:bg-zinc-800/50 px-3 py-2 rounded-full transition-colors duration-300 cursor-pointer"
                 to={"/contact"}
@@ -180,6 +188,17 @@ const NavBar = () => {
               {" "}
               /publications{" "}
             </Link>
+            {/* Add the Blog Link in the mobile menu */}
+            <a
+              onClick={menuOnclick}
+              href="https://hardy07.github.io/"
+              className="cursor-pointer"
+              /*target="_blank"*/
+              rel="noopener noreferrer"
+            >
+              {" "}
+              /blog{" "}
+            </a>
             <Link
               onClick={menuOnclick}
               to={"/contact"}
