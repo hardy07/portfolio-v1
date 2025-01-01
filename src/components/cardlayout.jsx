@@ -55,7 +55,6 @@ const cardData = [
       </ul>
     ),
   },
-
   {
     title: "Data Science",
     icon: "📈",
@@ -78,26 +77,6 @@ const cardData = [
       </ul>
     ),
   },
-
-  /* {
-    title: "Python & Automation",
-    icon: "⚙️",
-    content: (
-      <ul className="list-disc ml-5 space-y-3">
-        <li>
-          I develop efficient and robust Python applications, optimized for
-          performance and scalability.
-        </li>
-        <li>
-          I design and implement automated processes, including the creation of
-          bots, to streamline operations of all types, including business
-          processes, thereby improving productivity and accuracy.
-        </li>
-        <li>Web scraping</li>
-        <li>Task scheduling</li>
-      </ul>
-    ),
-  }, */
   {
     title: "Web Development",
     icon: "🌐",
@@ -123,24 +102,6 @@ const cardData = [
       </ul>
     ),
   },
-  /* {
-    title: "Bioinformatics",
-    icon: "🧬",
-    content: (
-      <ul className="list-disc ml-5 space-y-3">
-        <li>
-          I leverage bioinformatics tools and techniques for comprehensive
-          analysis of biological data.
-        </li>
-        <li>
-          Integration of computational and biological sciences to extract
-          meaningful insights from complex biological systems.
-        </li>
-        <li>Biological databases</li>
-        <li>Data mining</li>
-      </ul>
-    ),
-  }, */
 ];
 
 const Card = ({ title, icon, onClick }) => {
@@ -148,7 +109,8 @@ const Card = ({ title, icon, onClick }) => {
     <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="card shadow-md rounded-md overflow-hidden transition-all duration-300"
+      className="card shadow-md rounded-md overflow-hidden transition-all duration-300 mx-2 flex-shrink-0"
+      style={{ width: "230px" }}
     >
       <div className="card-content p-6 flex flex-col items-center justify-center text-center">
         <div className="text-2xl">{icon}</div>
@@ -202,9 +164,9 @@ const CardLayout = () => {
   return (
     <div className="mt-16 text-center flex flex-col items-center">
       <h1 className="text-2xl font-semibold relative z-10 heading-effect lg:text-3xl mt-24 mb-8">
-        Areas of Expertise
+        Skills
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="flex overflow-x-auto space-x-8 p-4">
         {cardData.map((card, index) => (
           <Card
             key={index}

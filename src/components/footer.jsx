@@ -10,7 +10,10 @@ const Footer = () => {
         <h2 className="opacity-50">
           Software Engineer • {new Date().getFullYear()}
         </h2>
-        <h2 className="opacity-50">sakthiveloffcl@gmail.com</h2>
+        <h2 className="opacity-50">
+          {" "}
+          <a href="mailto:sakthiveloffcl@gmail.com">sakthiveloffcl@gmail.com</a>
+        </h2>
       </div>
     </div>
   );

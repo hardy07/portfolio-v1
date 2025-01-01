@@ -1,90 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLanyard } from "react-use-lanyard";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 
 import NavBar from "../components/navbar.jsx";
 import Tooltip from "../components/tooltip.jsx";
-import RepoCard from "../components/repocard.jsx";
 import DiscordCard from "../components/discordcard.jsx";
-import ProjectsSection from "../components/projectssection.jsx";
+import EducationQualification from "../components/educationqualification.jsx";
+import CardLayout from "../components/cardlayout.jsx"; // Import the CardLayout component
 
 import { Link } from "react-router-dom";
 import { ImLocation } from "react-icons/im";
 import Footer from "../components/footer.jsx";
 import avatar from "../assets/avatar.jpg";
 import constants from "../utils/constants.jsx";
-import axios from "axios";
 import { useThemeStore } from "../contexts/theme.jsx";
-import ProjectsCard from "../components/projectscard.jsx";
-import CardLayout from "../components/cardlayout.jsx"; // Import the CardLayout component
-import EducationQualification from "../components/educationqualification.jsx";
 
 const Home = () => {
   const { mode } = useThemeStore();
-  const [repos, setRepos] = useState([]);
-  const [stars, setStars] = useState(0);
-  const [forks, setForks] = useState(0);
-  const [top4, setTop4] = useState([]);
-  const [projects, setProjects] = useState([]);
-
-  const { loading, status: discord_data /*, websocket */ } = useLanyard({
+  const { loading, status: discord_data } = useLanyard({
     userId: constants.discord_id,
     socket: true,
   });
 
-  useEffect(() => {
-    const GetRepos = async () => {
-      const { data } = await axios.get(
-        `https://api.github.com/users/${constants.github_username}/repos`
-      );
-      setRepos(data);
-    };
-
-    const GetProjects = async () => {
-      const { data } = await axios.get(`${constants.api_endpoint}/projects`);
-      setProjects(data);
-    };
-    GetProjects();
-    GetRepos();
-    //
-    document.getElementById("cards").onmousemove = (e) => {
-      for (const card of document.getElementsByClassName("card")) {
-        const rect = card.getBoundingClientRect(),
-          x = e.clientX - rect.left,
-          y = e.clientY - rect.top;
-
-        card.style.setProperty("--mouse-x", `${x}px`);
-        card.style.setProperty("--mouse-y", `${y}px`);
-      }
-    };
-  }, []);
+  const cardsRef = useRef(null);
 
   useEffect(() => {
-    if (repos.length) {
-      const myrepo = repos.filter((e) => !e.fork);
-      const starsRepo = myrepo.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.stargazers_count;
-      }, 0);
-      setStars(starsRepo);
-      const forksRepo = myrepo.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.forks;
-      }, 0);
-      setForks(forksRepo);
-      const top4Repos = myrepo
-        .sort((a, b) => b.stargazers_count - a.stargazers_count)
-        .slice(0, 4);
-      setTop4(top4Repos);
+    if (cardsRef.current) {
+      cardsRef.current.onmousemove = (e) => {
+        for (const card of document.getElementsByClassName("card")) {
+          const rect = card.getBoundingClientRect(),
+            x = e.clientX - rect.left,
+            y = e.clientY - rect.top;
+
+          card.style.setProperty("--mouse-x", `${x}px`);
+          card.style.setProperty("--mouse-y", `${y}px`);
+        }
+      };
     }
-  }, [repos]);
-  const resumePdfUrl =
-    "https://drive.google.com/file/d/1VsJ4XA49-KBygD4Ay9mNOIYqAWMC0d1A/view?usp=drive_link";
+  }, [cardsRef]);
 
   return (
     <div className={`bg-zinc-900 min-h-screen text-white font-rubik bg-grid `}>
       <NavBar />
 
-      <div className="flex w-full items-center justify-center flex-col">
+      <div className="flex w-full items-center justify-center flex-col mt-10">
         <div className="flex w-full items-center justify-center flex-col h-screen">
           <div className="relative">
             <img
@@ -146,7 +106,7 @@ const Home = () => {
             Developer based in{" "}
             <a
               target="_blank"
-              className="bg-zinc-800 hover:bg-zinc-700 transition-all duration-500 px-2 py-0.5 whitespace-nowrap rounded-full inline-flex items-center justify-center w-fit gap-2"
+              className="bg-zinc-800 hover:bg-zinc-700 transition-all duration-500 px-3 py-1.5 mt-2 whitespace-nowrap rounded-full inline-flex items-center justify-center w-fit gap-2"
               href={constants.map_location_url}
             >
               <ImLocation className="text-primary" /> {constants.location}
@@ -154,7 +114,7 @@ const Home = () => {
           </p>
           <Link
             to={
-              "https://drive.google.com/file/d/1VsJ4XA49-KBygD4Ay9mNOIYqAWMC0d1A/view?usp=drive_link"
+              "https://drive.google.com/file/d/1c0KJpOmy0lMjbZrb2hvnJvb5_LeRBpvN/view?usp=sharing"
             }
             target="_blank"
             rel="noopener noreferrer"
@@ -183,7 +143,10 @@ const Home = () => {
               {!loading ? <DiscordCard info={discord_data} /> : ""}
             </div>
           </div>
-          <div className="flex text-2xl gap-16 mt-5 bg-boxes border-white/10 border-[1px] px-8 py-3 rounded-2xl relative">
+          <div
+            ref={cardsRef}
+            className="flex text-2xl gap-16 mt-5 bg-boxes border-white/10 border-[1px] px-8 py-3 rounded-2xl relative"
+          >
             <p className="font-hand text-xl absolute -top-4 -left-8 -rotate-[35deg]">
               My Socials
             </p>
@@ -247,64 +210,21 @@ const Home = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="mt-16 text-center flex flex-col items-center"
-        >
-          <h1
-            className="text-2xl font-semibold relative z-10 heading-effect lg:text-3xl mt-24"
-            id="Projects"
+        <div className="home-content mt-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="container mx-auto px-5 py-1"
           >
-            Projects
-          </h1>
-          <div className="container mx-auto p-7 mt-19 mb-6">
-            <ProjectsSection />
-          </div>
-          <p className="text-start max-w-[20rem] mt-5 md:max-w-[30rem] lg:max-w-[750px] lg:text-lg my-5">
-            In my free time, I enjoy creating open source projects on{" "}
-            <a
-              className="underline text-purple-500 underline-offset-2 font-bold"
-              href={constants.github_url}
-              target="_blank"
-            >
-              GitHub
-            </a>
-            , so I can learn from others and share what I know. In total, all of
-            my open sourced projects have earnt me <strong>{stars}</strong>{" "}
-            stars on GitHub, and <strong>{forks}</strong> forks. Below are some
-            of my most popular repositories.
-          </p>
-          <div
-            className="grid grid-cols-1 gap-6  md:grid-cols-2 my-6"
-            id="cards"
-          >
-            {top4.map((item, idx) => {
-              return <RepoCard key={idx} {...item} />;
-            })}
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="mt-1 text-center flex flex-col items-center my-14"
-        >
-          <div id="AreasofInterest">
-            <CardLayout />
-          </div>
-        </motion.div>
-        <div>
-          <Link
-            to={"/contact"}
-            className="block bg-boxes border-white/10 border-[1px] px-5 py-5 rounded-2xl font-bold mt-4"
-          >
-            Contact Me
-          </Link>
+            <div id="AreasofInterest" className="mt-16">
+              <CardLayout />
+            </div>
+          </motion.div>
         </div>
-        <Footer />
       </div>
+
+      <Footer />
     </div>
   );
 };

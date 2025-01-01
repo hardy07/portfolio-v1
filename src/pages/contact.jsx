@@ -21,40 +21,26 @@ const Contact = () => {
   const form = useRef();
 
   useEffect(() => {
-    const date = new Date();
-    const timezone = "Asia/Kolkata";
-    const formattedTime = date.toLocaleString("en-US", {
-      timeZone: timezone,
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    const hour = date.toLocaleString("en-US", {
-      timeZone: timezone,
-      hour: "numeric",
-    });
-
-    const isInSleepTime = hour >= 23 || hour < 7;
-    setMystate(isInSleepTime ? "sleeping" : "awake");
-    setTime(formattedTime);
-
-    const intervalId = setInterval(() => {
+    const updateClock = () => {
       const date = new Date();
+      const timezone = "Asia/Kolkata";
       const formattedTime = date.toLocaleString("en-US", {
         timeZone: timezone,
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
       });
-      const hour = date.toLocaleString("en-US", {
-        timeZone: timezone,
-        hour: "numeric",
-      });
+      const hour = date.getHours();
 
+      // Define sleeping time range
       const isInSleepTime = hour >= 23 || hour < 7;
       setMystate(isInSleepTime ? "sleeping" : "awake");
       setTime(formattedTime);
-    }, 60 * 1000);
+    };
+
+    updateClock(); // Initial call to set the state
+
+    const intervalId = setInterval(updateClock, 60 * 1000); // Update every minute
 
     return () => clearInterval(intervalId);
   }, []);
